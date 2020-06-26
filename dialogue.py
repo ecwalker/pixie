@@ -27,3 +27,9 @@ speak_wizard.append("Wizard: Good to see you at the fishing hole.")
 speak_wizard.append("I run the shop here.")
 speak_wizard.append("Would you like to sell your fish?")
 
+#Speak to frog
+speak_frog = []
+speak_frog.append("Frog: Do you see that wizard over there?")
+speak_frog.append("He's looking for a rare eel.")
+speak_frog.append("I'm sure he would reward well for it.")
+

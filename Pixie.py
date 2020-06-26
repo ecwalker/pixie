@@ -56,6 +56,7 @@ player = Character('fairyR.png', 300, 300, 64)
 
 #Non-playable characters
 wizard = Character('wizard.png', 250, 112, 64) #Check size...
+frog = Character('frog.png', 750, 325, 24)
 
 #Empty Bag
 X = []
@@ -87,7 +88,7 @@ box = pygame.image.load('dialogue_box.png')
 price_dict = {}
 price_dict['flying fish'] = 1
 price_dict['crab'] = 50
-price_dict['river eel'] = 350
+price_dict['rare river eel'] = 350
 
 #Fishing hole
 fishing_hole = (600, 450)
@@ -157,6 +158,12 @@ while mainloop :
                             dialogue_text = next(dialogue_iterator)
                             purse_value += pg.sell_all(bag, price_dict)
                             bag = []
+                        if pg.collision(player.X, player.Y, frog.X, frog.Y, 75) :
+                            pygame.mixer.music.load('frog.mp3')
+                            pygame.mixer.music.play()
+                            in_dialogue = True
+                            dialogue_iterator = iter(d.speak_frog)
+                            dialogue_text = next(dialogue_iterator)
             elif event.type == pygame.KEYUP : #Stops player movement
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT :
                     player.X_change = 0
@@ -171,9 +178,9 @@ while mainloop :
                 catch_sec = random.randint(30, 60)
                 end_fish = start_fish + catch_sec
                 catch = random.randint(1, 100)
-                if catch < 80 :
+                if catch < 50 :
                     species = "flying fish"
-                elif catch < 99 :
+                elif catch < 80 :
                     species = "crab"
                 else :
                     species = "rare river eel"
@@ -195,6 +202,7 @@ while mainloop :
         pg.show_object(450, 100, lake, screen)
         pg.show_object(wizard.X, wizard.Y, wizard.img, screen)
         pg.show_object(100, 50, hut, screen)
+        pg.show_object(frog.X, frog.Y, frog.img, screen)
         pygame.draw.rect(screen, (200, 200, 9), (fishing_hole[0], fishing_hole[1], 5, 5)) #Rect -> (X, Y, width, height)
         #Render player
         player.show(screen)
